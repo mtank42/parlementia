@@ -7,7 +7,10 @@ const $ = (id) => document.getElementById(id);
 // ---------- Rendu Markdown minimal ----------
 function mdToHtml(md) {
   const esc = (s) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-  const lines = (md || "").split("\n");
+  // Certains LLM enveloppent leur réponse dans un bloc ```markdown ... ``` :
+  // on retire ce fence englobant s'il couvre tout le contenu.
+  md = (md || "").trim().replace(/^```[a-z]*\n([\s\S]*?)\n?```$/i, "$1");
+  const lines = md.split("\n");
   let html = "", inList = false;
   const closeList = () => { if (inList) { html += "</ul>"; inList = false; } };
   for (let raw of lines) {

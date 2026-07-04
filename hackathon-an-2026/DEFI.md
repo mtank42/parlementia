@@ -90,6 +90,7 @@ données par mot-clé, sans clé requise) pour son agent de recueil de données.
 - [Image 2](images/image-2.png)
 
 ### Documents
+- [Vidéo de démonstration — parcours utilisateur (~1 min 50)](hackathon-an-2026/docs/demo-parcours-utilisateur.mp4)
 - [Tableur 1](hackathon-an-2026/docs/Classeur1.xlsx)
 - [Document 2](hackathon-an-2026/docs/document-2.pdf)
 

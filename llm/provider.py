@@ -57,7 +57,7 @@ class MistralProvider(LLMProvider):
             "Authorization": f"Bearer {self.api_key}",
             "Content-Type": "application/json",
         }
-        with httpx.Client(timeout=120) as client:
+        with httpx.Client(timeout=240) as client:
             resp = client.post(self.url, json=payload, headers=headers)
             resp.raise_for_status()
             data = resp.json()
