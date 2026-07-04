@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Parlementia — Copilote de prospective parlementaire</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <header class="rf-header">
+    <div class="rf-bloc-marque">
+      <div class="rf-devise">
+        <span>Liberté</span><span>Égalité</span><span>Fraternité</span>
+      </div>
+      <div class="rf-titre">
+        <strong>PARLEMENTIA</strong>
+        <span class="rf-sous-titre">Copilote de prospective parlementaire</span>
+      </div>
+    </div>
+    <div class="rf-provider">Modèle : <span id="provider">…</span></div>
+  </header>
+
+  <main>
+    <section id="chat" class="carte">
+      <div id="messages"></div>
+      <div id="saisie" class="saisie" hidden>
+        <div class="progress" id="progress"></div>
+        <textarea id="input" rows="2" placeholder="Votre réponse…"></textarea>
+        <button id="envoyer">Envoyer</button>
+      </div>
+      <div id="demarrer-zone">
+        <h2 class="accueil-titre">Décider aujourd'hui en comprenant les conséquences de demain.</h2>
+        <p class="accueil-texte">
+          Parlementia construit des <strong>futurs souhaitables</strong> et réalise le
+          <strong>backcasting</strong> de vos décisions, en cohérence avec les 17 Objectifs
+          de Développement Durable. Neutre, factuel et sourcé.
+        </p>
+        <button id="demarrer" class="cta">Démarrer une analyse</button>
+      </div>
+    </section>
+
+    <section id="pipeline" class="carte" hidden>
+      <h2>Déroulé de l'analyse</h2>
+      <ol id="etapes"></ol>
+    </section>
+
+    <section id="radars" class="carte" hidden>
+      <h2>Impact ODD par scénario</h2>
+      <p class="legende">50 = impact neutre · &gt;50 = ODD renforcé · &lt;50 = ODD fragilisé</p>
+      <div id="radars-grid" class="radars-grid"></div>
+    </section>
+
+    <section id="document" class="carte" hidden>
+      <div class="doc-entete">
+        <h2>Document parlementaire</h2>
+        <button id="imprimer" class="secondaire">Imprimer / PDF</button>
+      </div>
+      <div id="synthese-contenu"></div>
+    </section>
+  </main>
+
+  <footer class="rf-footer">
+    Outil de démonstration — Hackathon Assemblée nationale · Analyse neutre,
+    factuelle et sourcée, en cohérence avec les 17 ODD.
+  </footer>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
