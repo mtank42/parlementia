@@ -24,22 +24,22 @@ OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "mistral")
 # id = numéro officiel ONU ; short = étiquette courte pour le radar.
 ODD = [
     {"id": 1, "short": "Pauvreté", "label": "Pas de pauvreté"},
-    {"id": 2, "short": "Faim", "label": "Faim zéro"},
+    {"id": 2, "short": "Faim", "label": "Faim « zéro »"},
     {"id": 3, "short": "Santé", "label": "Bonne santé et bien-être"},
     {"id": 4, "short": "Éducation", "label": "Éducation de qualité"},
     {"id": 5, "short": "Égalité F/H", "label": "Égalité entre les sexes"},
     {"id": 6, "short": "Eau", "label": "Eau propre et assainissement"},
-    {"id": 7, "short": "Énergie", "label": "Énergie propre et abordable"},
-    {"id": 8, "short": "Travail", "label": "Travail décent et croissance"},
-    {"id": 9, "short": "Industrie", "label": "Industrie, innovation, infrastructure"},
+    {"id": 7, "short": "Énergie", "label": "Énergie propre et d'un coût abordable"},
+    {"id": 8, "short": "Travail", "label": "Travail décent et croissance économique"},
+    {"id": 9, "short": "Industrie", "label": "Industrie, innovation et infrastructure"},
     {"id": 10, "short": "Inégalités", "label": "Inégalités réduites"},
     {"id": 11, "short": "Villes", "label": "Villes et communautés durables"},
-    {"id": 12, "short": "Consommation", "label": "Consommation responsable"},
-    {"id": 13, "short": "Climat", "label": "Lutte contre le changement climatique"},
+    {"id": 12, "short": "Consommation", "label": "Consommation et production responsables"},
+    {"id": 13, "short": "Climat", "label": "Mesures relatives à la lutte contre les changements climatiques"},
     {"id": 14, "short": "Vie aquatique", "label": "Vie aquatique"},
     {"id": 15, "short": "Vie terrestre", "label": "Vie terrestre"},
-    {"id": 16, "short": "Institutions", "label": "Paix, justice, institutions efficaces"},
-    {"id": 17, "short": "Partenariats", "label": "Partenariats pour les objectifs"},
+    {"id": 16, "short": "Institutions", "label": "Paix, justice et institutions efficaces"},
+    {"id": 17, "short": "Partenariats", "label": "Partenariats pour la réalisation des objectifs"},
 ]
 
 # --- Questions de cadrage posées par l'agent 1 -----------------------------
@@ -50,7 +50,7 @@ FRAMING_QUESTIONS = [
     "Comment saurez-vous, dans cinq ans, que cette politique est une réussite ? "
     "Quels indicateurs utiliseriez-vous ?",
     "Quel territoire et quelles populations sont concernés ?",
-    "Parmi les 17 Objectifs de Développement Durable, quels sont les 3 à 5 ODD "
+    "Parmi les 17 Objectifs de Développement Durable, quels sont les 3 ou 5 ODD "
     "que vous souhaitez placer au cœur de votre vision ?",
 ]
 

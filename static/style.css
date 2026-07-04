@@ -96,6 +96,60 @@ button {
   border-radius: 6px;
   padding: 12px 22px;
 }
+/* --- Validation de la reformulation --- */
+.validation-comprehension { display: flex; flex-direction: column; gap: 10px; }
+.validation-comprehension textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--gris-bord);
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 15px;
+  resize: vertical;
+}
+.validation-comprehension textarea:focus { outline: 2px solid var(--bleu); border-color: var(--bleu); }
+.validation-actions { display: flex; }
+
+/* --- Sélecteur des 17 ODD --- */
+.odd-picker { display: flex; flex-direction: column; gap: 10px; }
+.odd-picker-aide { margin: 0; font-size: 13px; color: var(--gris-doux); }
+.odd-picker-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 8px; }
+.odd-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border: 1px solid var(--gris-bord);
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+}
+.odd-option:has(input:checked) { background: var(--gris-fond); border-color: var(--bleu); }
+.odd-option:has(input:disabled:not(:checked)) { opacity: .45; cursor: not-allowed; }
+.odd-option-num {
+  flex: 0 0 auto;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--bleu);
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+}
+.odd-picker-erreur { margin: 0; font-size: 13px; color: var(--rouge); font-weight: 600; }
+.odd-picker-recap {
+  background: var(--gris-fond);
+  border: 1px solid var(--gris-bord);
+  border-radius: 6px;
+  padding: 10px 14px;
+  font-size: 13px;
+}
+.odd-picker-recap ul { margin: 6px 0 0; padding-left: 18px; }
+.odd-picker-recap li { margin: 2px 0; }
+
 button.cta, #envoyer { background: var(--bleu); color: var(--blanc); align-self: flex-start; }
 button.cta:hover, #envoyer:hover { background: #00006b; }
 button.secondaire { background: var(--blanc); color: var(--bleu); border: 1px solid var(--bleu); }

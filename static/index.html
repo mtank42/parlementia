@@ -26,7 +26,23 @@
       <div id="saisie" class="saisie" hidden>
         <div class="progress" id="progress"></div>
         <textarea id="input" rows="2" placeholder="Votre réponse…"></textarea>
+        <div id="odd-picker" class="odd-picker" hidden>
+          <p class="odd-picker-aide">Sélectionnez exactement 3 ou 5 objectifs.</p>
+          <div id="odd-picker-grid" class="odd-picker-grid"></div>
+          <p id="odd-picker-erreur" class="odd-picker-erreur" hidden></p>
+          <div id="odd-picker-recap" class="odd-picker-recap" hidden>
+            <strong>Votre sélection :</strong>
+            <ul id="odd-picker-recap-liste"></ul>
+          </div>
+        </div>
         <button id="envoyer">Envoyer</button>
+      </div>
+      <div id="validation-comprehension" class="validation-comprehension" hidden>
+        <p class="odd-picker-aide">Relisez la reformulation ci-dessous. Vous pouvez la corriger directement avant de lancer l'analyse.</p>
+        <textarea id="comprehension-texte" rows="8"></textarea>
+        <div class="validation-actions">
+          <button id="valider-comprehension" class="cta">Valider et lancer l'analyse</button>
+        </div>
       </div>
       <div id="demarrer-zone">
         <h2 class="accueil-titre">Décider aujourd'hui en comprenant les conséquences de demain.</h2>

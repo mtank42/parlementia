@@ -1,6 +1,6 @@
 "use strict";
 
-const state = { sessionId: null, odd: [] };
+const state = { sessionId: null, odd: [], currentKey: null, oddSelection: new Set() };
 
 const $ = (id) => document.getElementById(id);
 
@@ -71,20 +71,85 @@ async function start() {
   const d = await r.json();
   state.sessionId = d.session_id;
   addMsg(d.greeting, "bot");
-  askQuestion(d.question, d.step, d.total);
+  askQuestion(d.question, d.step, d.total, d.key);
   $("demarrer-zone").hidden = true;
   $("saisie").hidden = false;
   $("input").focus();
 }
 
-function askQuestion(q, step, total) {
+function askQuestion(q, step, total, key) {
   $("progress").textContent = `Question ${step} / ${total}`;
   addMsg(q, "bot");
+  state.currentKey = key;
+  const isOdd = key === "odd";
+  $("input").hidden = isOdd;
+  $("odd-picker").hidden = !isOdd;
+  if (isOdd) {
+    buildOddPicker();
+  } else {
+    $("input").focus();
+  }
+}
+
+// ---------- Sélecteur des 17 ODD ----------
+function buildOddPicker() {
+  state.oddSelection = new Set();
+  $("odd-picker-erreur").hidden = true;
+  $("odd-picker-recap").hidden = true;
+  const grid = $("odd-picker-grid");
+  grid.innerHTML = "";
+  state.odd.forEach((o) => {
+    const label = document.createElement("label");
+    label.className = "odd-option";
+    label.innerHTML = `<input type="checkbox" value="${o.id}" />
+      <span class="odd-option-num">${o.id}</span>
+      <span class="odd-option-label">${o.label}</span>`;
+    label.querySelector("input").addEventListener("change", onOddToggle);
+    grid.appendChild(label);
+  });
+}
+
+function onOddToggle(e) {
+  const id = Number(e.target.value);
+  if (e.target.checked) {
+    if (state.oddSelection.size >= 5) { e.target.checked = false; return; }
+    state.oddSelection.add(id);
+  } else {
+    state.oddSelection.delete(id);
+  }
+  const atMax = state.oddSelection.size >= 5;
+  $("odd-picker-grid").querySelectorAll("input[type=checkbox]").forEach((cb) => {
+    if (!cb.checked) cb.disabled = atMax;
+  });
+  $("odd-picker-erreur").hidden = true;
+  updateOddRecap();
+}
+
+function updateOddRecap() {
+  const chosen = state.odd.filter((o) => state.oddSelection.has(o.id));
+  const recap = $("odd-picker-recap");
+  const liste = $("odd-picker-recap-liste");
+  if (chosen.length === 0) { recap.hidden = true; return; }
+  liste.innerHTML = chosen.map((o) => `<li>ODD ${o.id} — ${o.label}</li>`).join("");
+  recap.hidden = false;
 }
 
 async function sendAnswer() {
-  const val = $("input").value.trim();
-  if (!val) return;
+  let val;
+  if (state.currentKey === "odd") {
+    const n = state.oddSelection.size;
+    if (n !== 3 && n !== 5) {
+      $("odd-picker-erreur").textContent =
+        `Sélectionnez exactement 3 ou 5 ODD (vous en avez sélectionné ${n}).`;
+      $("odd-picker-erreur").hidden = false;
+      return;
+    }
+    const chosen = state.odd.filter((o) => state.oddSelection.has(o.id));
+    val = chosen.map((o) => `ODD ${o.id} (${o.label})`).join(", ");
+  } else {
+    val = $("input").value.trim();
+    if (!val) return;
+  }
   addMsg(val, "user");
   $("input").value = "";
   $("envoyer").disabled = true;
@@ -98,14 +163,38 @@ async function sendAnswer() {
   $("envoyer").disabled = false;
 
   if (!d.done) {
-    askQuestion(d.question, d.step, d.total);
-    $("input").focus();
+    askQuestion(d.question, d.step, d.total, d.key);
   } else {
     $("saisie").hidden = true;
     addMsg("**Reformulation de votre intention :**\n\n" + d.comprehension, "bot");
-    addMsg(d.message, "info");
-    runAnalysis();
+    $("comprehension-texte").value = d.comprehension;
+    $("validation-comprehension").hidden = false;
+    $("comprehension-texte").focus();
   }
+}
+
+async function validerComprehension() {
+  const texte = $("comprehension-texte").value.trim();
+  if (!texte) return;
+  $("valider-comprehension").disabled = true;
+
+  const r = await fetch("/api/valider-comprehension", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ session_id: state.sessionId, comprehension: texte }),
+  });
+  const d = await r.json();
+  $("valider-comprehension").disabled = false;
+
+  if (!r.ok) {
+    addMsg("⚠️ " + (d.detail || "Erreur de validation."), "info");
+    return;
+  }
+
+  $("validation-comprehension").hidden = true;
+  addMsg("**Reformulation validée :**\n\n" + texte, "bot");
+  addMsg(d.message, "info");
+  runAnalysis();
 }
 
 // ---------- Pipeline (SSE) ----------
@@ -169,4 +258,5 @@ $("envoyer").addEventListener("click", sendAnswer);
 $("input").addEventListener("keydown", (e) => {
   if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) { e.preventDefault(); sendAnswer(); }
 });
+$("valider-comprehension").addEventListener("click", validerComprehension);
 $("imprimer").addEventListener("click", () => window.print());

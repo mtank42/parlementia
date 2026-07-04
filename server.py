@@ -3,9 +3,12 @@
 Flux :
   1. /api/start      → crée une session, renvoie l'accueil + 1re question.
   2. /api/answer     → enregistre la réponse, renvoie la question suivante ;
-                       à la 5e, lance l'agent 1 (compréhension) et signale que
-                       l'analyse peut démarrer.
-  3. /api/analyze    → flux SSE : exécute les agents 2→9 et pousse chaque étape,
+                       à la 5e, lance l'agent 1 (compréhension) et la renvoie
+                       pour validation (l'analyse ne démarre pas encore).
+  3. /api/valider-comprehension → enregistre la reformulation validée (ou
+                       corrigée par l'utilisateur) et autorise le lancement
+                       de l'analyse.
+  4. /api/analyze    → flux SSE : exécute les agents 2→9 et pousse chaque étape,
                        puis les scores ODD (pour les radars).
 
 Sessions stockées en mémoire (suffisant pour une démo mono-utilisateur).
@@ -42,6 +45,11 @@ class AnswerIn(BaseModel):
     answer: str
 
 
+class ComprehensionIn(BaseModel):
+    session_id: str
+    comprehension: str
+
+
 @app.get("/")
 def index():
     return FileResponse(os.path.join(STATIC_DIR, "index.html"))
@@ -61,6 +69,7 @@ def start():
         "session_id": sid,
         "greeting": GREETING,
         "question": FRAMING_QUESTIONS[0],
+        "key": CADRAGE_KEYS[0],
         "step": 1,
         "total": len(FRAMING_QUESTIONS),
     }
@@ -82,18 +91,32 @@ def answer(payload: AnswerIn):
         return {
             "done": False,
             "question": FRAMING_QUESTIONS[idx],
+            "key": CADRAGE_KEYS[idx],
             "step": idx + 1,
             "total": len(FRAMING_QUESTIONS),
         }
 
-    # Cadrage terminé → agent 1 (reformulation).
+    # Cadrage terminé → agent 1 (reformulation), soumise à validation.
     comprehension = Agent1Comprehension().run(sess)
     sess["comprehension"] = comprehension
     return {
         "done": True,
         "comprehension": comprehension,
-        "message": "Merci. Je lance l'analyse prospective complète.",
     }
+
+
+@app.post("/api/valider-comprehension")
+def valider_comprehension(payload: ComprehensionIn):
+    sess = SESSIONS.get(payload.session_id)
+    if sess is None:
+        raise HTTPException(404, "Session inconnue")
+
+    texte = payload.comprehension.strip()
+    if not texte:
+        raise HTTPException(400, "La reformulation ne peut pas être vide")
+
+    sess["comprehension"] = texte
+    return {"message": "Merci. Je lance l'analyse prospective complète."}
 
 
 @app.get("/api/analyze")
