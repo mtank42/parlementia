@@ -4,6 +4,10 @@ Outil d'aide à la décision pour les élus : à partir d'une intention politiqu
 il construit des **futurs souhaitables** et réalise le **backcasting**, en
 cohérence avec les 17 **Objectifs de Développement Durable (ODD)**.
 
+> 🤖 **Vous reprenez le projet (LLM ou développeur) ?** Lisez d'abord
+> **[AGENTS.md](AGENTS.md)** : architecture détaillée, contrat de chaque agent,
+> schéma du contexte partagé, points d'extension et limites connues.
+
 ## Architecture — 9 agents + orchestrateur (un module par agent)
 
 | Agent | Module | Rôle |
