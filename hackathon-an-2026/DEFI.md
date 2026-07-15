@@ -38,7 +38,7 @@ souverain, ou mode simulé sans dépendance réseau) via une seule variable
 d'environnement.
 
 ### Image principale
-![Image principale](images/TeamParlementia.jpg)
+![Image principale](hackathon-an-2026/images/TeamParlementia.jpg)
 
 ### Contributeurs
 - Tiphaine Lalonde
@@ -87,7 +87,6 @@ données par mot-clé, sans clé requise) pour son agent de recueil de données.
 
 ### Galerie
 - [Image 1](images/TeamParlementia.jpg)
-- [Image 2](images/image-2.png)
 
 ### Documents
 - [Vidéo de démonstration — parcours utilisateur (~1 min 50)](hackathon-an-2026/docs/demo-parcours-utilisateur.mp4)
