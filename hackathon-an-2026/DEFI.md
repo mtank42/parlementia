@@ -38,7 +38,7 @@ souverain, ou mode simulé sans dépendance réseau) via une seule variable
 d'environnement.
 
 ### Image principale
-![Image principale](images/cover.png)
+![Image principale](images/TeamParlementia.jpg)
 
 ### Contributeurs
 - Tiphaine Lalonde
