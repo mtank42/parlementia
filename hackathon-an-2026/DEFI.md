@@ -94,4 +94,4 @@ données par mot-clé, sans clé requise) pour son agent de recueil de données.
 ### URL de démonstration
 
 ### Diapositives de présentation
-[Diapositives de présentation](docs/diapositives.pdf)
+[Diapositives de présentation](docs/Pitch-Parlementaria.pdf)
