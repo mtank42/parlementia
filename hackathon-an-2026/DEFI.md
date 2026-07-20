@@ -86,7 +86,8 @@ interroge l'API publique générique **data.gouv.fr** (recherche de jeux de
 données par mot-clé, sans clé requise) pour son agent de recueil de données.
 
 ### Galerie
-- [Image 1](images/Team2.jpg)
+- [Image 1](images/Team-Parlementia.jpg)
+- [Image 2](images/Team2.jpg)
 
 ### Documents
 - [Vidéo de démonstration — parcours utilisateur (~1 min 50)](docs/demo-parcours-utilisateur.mp4)
